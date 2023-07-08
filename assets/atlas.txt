@@ -1,0 +1,82 @@
+atlas.png
+size: 114, 363
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dpad_down_down
+  rotate: false
+  xy: 2, 2
+  size: 42, 54
+  orig: 42, 54
+  offset: 0, 0
+  index: -1
+dpad_down_up
+  rotate: false
+  xy: 46, 2
+  size: 42, 54
+  orig: 42, 54
+  offset: 0, 0
+  index: -1
+dpad_left_down
+  rotate: false
+  xy: 2, 58
+  size: 54, 42
+  orig: 54, 42
+  offset: 0, 0
+  index: -1
+dpad_left_up
+  rotate: false
+  xy: 58, 58
+  size: 54, 42
+  orig: 54, 42
+  offset: 0, 0
+  index: -1
+dpad_right_down
+  rotate: false
+  xy: 2, 102
+  size: 54, 42
+  orig: 54, 42
+  offset: 0, 0
+  index: -1
+dpad_right_up
+  rotate: false
+  xy: 58, 102
+  size: 54, 42
+  orig: 54, 42
+  offset: 0, 0
+  index: -1
+dpad_up_down
+  rotate: false
+  xy: 2, 146
+  size: 42, 54
+  orig: 42, 54
+  offset: 0, 0
+  index: -1
+dpad_up_up
+  rotate: false
+  xy: 46, 146
+  size: 42, 54
+  orig: 42, 54
+  offset: 0, 0
+  index: -1
+face_button_down
+  rotate: false
+  xy: 2, 202
+  size: 49, 49
+  orig: 49, 49
+  offset: 0, 0
+  index: -1
+face_button_up
+  rotate: false
+  xy: 53, 202
+  size: 49, 49
+  orig: 49, 49
+  offset: 0, 0
+  index: -1
+grassy_checkers
+  rotate: false
+  xy: 2, 253
+  size: 108, 108
+  orig: 108, 108
+  offset: 0, 0
+  index: -1
