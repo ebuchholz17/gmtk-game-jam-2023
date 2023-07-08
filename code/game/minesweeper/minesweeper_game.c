@@ -22,6 +22,7 @@ void initMinesweeper (mine_state* mineState, mem_arena *memory) {
             mine_cell *cell = &ms->cells[i * GRID_WIDTH + j];
             cell->row = i;
             cell->col = j;
+            cell->cellGroupIndices = i32_listInit(memory, 8);
         }
     }
 }
@@ -236,6 +237,7 @@ void revealCell (mine_cell *cell) {
             cell->open = true;
 
             if (cell->hasBomb) {
+                ms->revealedBomb = true;
                 //playSound("wormhole_revealed", gameSounds, assets);
             }
             else {
@@ -260,6 +262,13 @@ void doAIAction (void) {
         scratch_mem_save aiStartMemorySave;
         saveScratchMemPointer(msScratchMemory, &aiStartMemorySave);
 
+        for (int i = 0; i < GRID_HEIGHT; ++i) {
+            for (int j = 0; j < GRID_WIDTH; ++j) {
+                mine_cell *cell = &ms->cells[i * GRID_WIDTH + j];
+                cell->cellGroupIndices.numValues = 0;
+            }
+        }
+
         // Get list of (unsolved) open cells with adj bombs
         mine_cell_ptr_list unsolvedCells = mine_cell_ptr_listInit(msScratchMemory, GRID_WIDTH * GRID_HEIGHT);
         for (int i = 0; i < GRID_HEIGHT; ++i) {
@@ -270,6 +279,7 @@ void doAIAction (void) {
                 }
             }
         }
+        cell_group_list cellGroups = cell_group_listInit(msScratchMemory, 600);
 
         // Sort closest to cursor? random shuffle for now
         for (int i = unsolvedCells.numValues - 1; i >= 0; --i) {
@@ -282,6 +292,7 @@ void doAIAction (void) {
             unsolvedCells.values[randomIndex] = cell;
         }
 
+
         // For each cell
         b32 didAction = false;
         for (int cellIndex = 0; cellIndex < unsolvedCells.numValues; cellIndex++) {
@@ -291,7 +302,8 @@ void doAIAction (void) {
             //saveScratchMemPointer(msScratchMemory, &cellMemorySave);
 
             // - get num adj flagged and num adj unflagged cells
-            mine_cell_ptr_list adjCells = mine_cell_ptr_listInit(msScratchMemory, 8);
+            cell->adjCells = mine_cell_ptr_listInit(msScratchMemory, 8);
+            mine_cell_ptr_list *adjCells = &cell->adjCells;
             for (int i = -1; i <= 1; ++i) {
                 for (int j = -1; j <= 1; ++j) {
                     int row = cell->row + i;
@@ -306,36 +318,61 @@ void doAIAction (void) {
 
                     mine_cell *neighbor = &ms->cells[row * GRID_WIDTH + col];
                     if (!neighbor->open) {
-                        mine_cell_ptr_listPush(&adjCells, neighbor);
+                        mine_cell_ptr_listPush(adjCells, neighbor);
                     }
                 }
             }
 
-            int numFlaggedCells = 0;
-            int numUnflaggedCells = 0;
+            cell->numFlaggedCells = 0;
+            cell->numUnflaggedCells = 0;
 
-            for (int adjIndex = 0; adjIndex < adjCells.numValues; adjIndex++) {
-                mine_cell *adjCell = adjCells.values[adjIndex];
+            for (int adjIndex = 0; adjIndex < adjCells->numValues; adjIndex++) {
+                mine_cell *adjCell = adjCells->values[adjIndex];
                 if (adjCell->flagged) {
-                    numFlaggedCells++;
+                    cell->numFlaggedCells++;
                 }
                 else {
-                    numUnflaggedCells++;
+                    cell->numUnflaggedCells++;
                 }
             }
 
-            int numRemainingBombs = cell->numAdjBombs - numFlaggedCells;
+            cell->numRemainingBombs = cell->numAdjBombs - cell->numFlaggedCells;
+
+            // form groups
+            // e.g. two adj unflagged cells, 1 remaining flag: form a group (cells: [4, 5], [4, 6]; bombs: 1)
+            cell_group cellGroup = (cell_group){ 
+                .coords = cell_coord_listInit(msScratchMemory, 8),
+                .numBombs = cell->numRemainingBombs,
+                .index = cellGroups.numValues
+            };
+
+            for (int adjIndex = 0; adjIndex < adjCells->numValues; adjIndex++) {
+                mine_cell *adjCell = adjCells->values[adjIndex];
+                if (!adjCell->flagged && !adjCell->open) {
+                    cell_coord_listPush(&cellGroup.coords, (cell_coord){ .row = adjCell->row, 
+                                                                         .col = adjCell->col });
+                    i32_listPush(&adjCell->cellGroupIndices, cellGroup.index);
+                }
+            }
+
+            cell_group_listPush(&cellGroups, cellGroup);
+        }
+
+        for (int cellIndex = 0; cellIndex < unsolvedCells.numValues; cellIndex++) {
+            mine_cell *cell = unsolvedCells.values[cellIndex];
+            mine_cell_ptr_list *adjCells = &cell->adjCells;
+
             // - if num adj flagged = num adj bombs
-            if (numFlaggedCells == cell->numAdjBombs) {
+            if (cell->numFlaggedCells == cell->numAdjBombs) {
                 //   - if num ajd unflagged = 0, marked solved
-                if (numUnflaggedCells == 0) {
+                if (cell->numUnflaggedCells == 0) {
                     cell->solved = true;
                 }
                 else {
                     // open adj cells
                     // TODO: animate cursor to one of the cells and click it
-                    for (int adjIndex = 0; adjIndex < adjCells.numValues; adjIndex++) {
-                        mine_cell *adjCell = adjCells.values[adjIndex];
+                    for (int adjIndex = 0; adjIndex < adjCells->numValues; adjIndex++) {
+                        mine_cell *adjCell = adjCells->values[adjIndex];
                         if (!adjCell->flagged && !adjCell->open) {
                             revealCell(adjCell);
                         }
@@ -345,9 +382,9 @@ void doAIAction (void) {
             }
             // - if num adj unflagged = num adj bombs
             //   - flag all adj cells
-            else if (numUnflaggedCells == numRemainingBombs) {
-                for (int adjIndex = 0; adjIndex < adjCells.numValues; adjIndex++) {
-                    mine_cell *adjCell = adjCells.values[adjIndex];
+            else if (cell->numUnflaggedCells == cell->numRemainingBombs) {
+                for (int adjIndex = 0; adjIndex < adjCells->numValues; adjIndex++) {
+                    mine_cell *adjCell = adjCells->values[adjIndex];
                     if (!adjCell->flagged && !adjCell->open) {
                         adjCell->flagged = true;
                     }
@@ -355,26 +392,123 @@ void doAIAction (void) {
                 didAction = true;
             }
             else {
-                // If can't do that: form groups
-                // e.g. two adj unflagged cells, 1 remaining flag: form a group (cells: [4, 5], [4, 6]; bombs: 1)
-                
-                // deduce open cell: check if a (whole) group of considered cells is known to contain X bombs: then decrement num remaining flags
-                // if num remaining flags= 0: open remaining considered cells
+                for (i32 adjCellIndex = 0; adjCellIndex < cell->adjCells.numValues; ++adjCellIndex) {
+                    mine_cell *adjCell = adjCells->values[adjCellIndex];
+                    if (!adjCell->flagged && !adjCell->open && 
+                        adjCell->cellGroupIndices.numValues > 0) 
+                    {
+                        for (i32 cellGroupIndex = 0; 
+                             cellGroupIndex < adjCell->cellGroupIndices.numValues; 
+                             ++cellGroupIndex) 
+                        {
+                            scratch_mem_save cellMemorySave;
+                            saveScratchMemPointer(msScratchMemory, &cellMemorySave);
 
-                // deduce flag cell: check if a (partial) group of considered cells is know to contain X flags: then decremtn num remaining flags
-                // if num remaining flags = num remaining considered cells: flag those cells
+                            mine_cell_ptr_list remainingCells = mine_cell_ptr_listInit(msScratchMemory, 8);
+
+                            cell_group cellGroup = cellGroups.values[adjCell->cellGroupIndices.values[cellGroupIndex]];
+                            // deduce open cell: check if a (whole) group of considered cells is known to contain X bombs: then decrement num remaining flags
+                            // if num remaining flags= 0: open remaining considered cells
+                            b32 allCellGroupCoordsAreAdj = true;
+
+                            for (i32 adjCellIndex2 = 0; adjCellIndex2 < cell->adjCells.numValues; ++adjCellIndex2) {
+                                mine_cell *adjCell2 = adjCells->values[adjCellIndex2];
+                                if (adjCell2->flagged || adjCell2->open) {
+                                    continue;
+                                } 
+
+                                b32 coordIsAdj = false;
+                                for (i32 coordIndex = 0; 
+                                     coordIndex < cellGroup.coords.numValues;
+                                     ++coordIndex) 
+                                {
+                                    cell_coord coord = cellGroup.coords.values[coordIndex];
+
+                                    // TODO: better mapping without looping through adj cells again
+                                    if (adjCell2->row == coord.row && adjCell2->col == coord.col) {
+                                        coordIsAdj = true;
+                                        break;
+                                    }
+                                }
+
+                                if (!coordIsAdj) {
+                                    mine_cell_ptr_listPush(&remainingCells, adjCell2);
+                                    //allCellGroupCoordsAreAdj = false;
+                                }
+                            }
+
+                            for (i32 coordIndex = 0; 
+                                 coordIndex < cellGroup.coords.numValues;
+                                 ++coordIndex) 
+                            {
+                                cell_coord coord = cellGroup.coords.values[coordIndex];
+                                b32 coordIsAdj = false;
+                                for (i32 adjCellIndex2 = 0; adjCellIndex2 < cell->adjCells.numValues; ++adjCellIndex2) {
+                                    mine_cell *adjCell2 = adjCells->values[adjCellIndex2];
+
+                                    // TODO: better mapping without looping through adj cells again
+                                    if (adjCell2->row == coord.row && adjCell2->col == coord.col) {
+                                        coordIsAdj = true;
+                                        break;
+                                    }
+                                }
+
+                                if (!coordIsAdj) {
+                                    allCellGroupCoordsAreAdj = false;
+                                }
+                            }
+
+                            if (allCellGroupCoordsAreAdj) {
+                                i32 numCellsNotInGroup = cell->numUnflaggedCells - cellGroup.coords.numValues;
+                                if (numCellsNotInGroup > 0 && cell->numRemainingBombs - cellGroup.numBombs == 0) {
+                                    didAction = true;
+                                    for (i32 remainingCellIndex = 0; remainingCellIndex < remainingCells.numValues; remainingCellIndex++) {
+                                        mine_cell *remainingCell = remainingCells.values[remainingCellIndex];
+                                        revealCell(remainingCell);
+                                    }
+                                }
+                            }
+
+                            // deduce flag cell: check if a (partial) group of considered cells is know to contain X flags: then decremtn num remaining flags
+                            // if num remaining flags = num remaining considered cells: flag those cells
+                            if (!didAction) {
+                                if (remainingCells.numValues > 0 && remainingCells.numValues == (cell->numRemainingBombs - cellGroup.numBombs)) {
+                                    didAction = true;
+                                    for (i32 remainingCellIndex = 0; remainingCellIndex < remainingCells.numValues; remainingCellIndex++) {
+                                        mine_cell *remainingCell = remainingCells.values[remainingCellIndex];
+                                        remainingCell->flagged = true;
+                                    }
+                                }
+                            }
+
+                            restoreScratchMemPointer(msScratchMemory, &cellMemorySave);
+
+                            if (didAction) {
+                                break;
+                            }
+                        }
+                    }
+                    if (didAction) {
+                        break;
+                    } 
+                }
             }
-            //restoreScratchMemPointer(msScratchMemory, &cellMemorySave);
 
             if (didAction) {
                 break;
             }
         }
 
-        // if all open cells with adj bombs considered and no options: pick an adj unflagged cell
-        // randomly and open it (guess)
-
-        // keep cells solved across frames: reset groups, cell list, etc. between frames
+        if (!didAction) {
+            // if all open cells with adj bombs considered and no options: pick an adj unflagged cell
+            // randomly and open it (guess)
+            //if (unsolvedCells.numValues > 0) {
+                mine_cell *cell = unsolvedCells.values[0];
+                if (cell->adjCells.numValues > 0) {
+                    revealCell(cell->adjCells.values[0]);
+                }
+            }
+        }
 
         restoreScratchMemPointer(msScratchMemory, &aiStartMemorySave);
     }
@@ -390,11 +524,13 @@ void updateMinesweeper (game_input *input, virtual_input *vInput, f32 dt,
         //startGame(memory);
     }
 
-    ms->aiTimer += dt;
-    f32 aiStepTime = 0.1f;
-    while (ms->aiTimer >= aiStepTime) {
-        ms->aiTimer -= aiStepTime;
-        doAIAction();
+    if (!ms->revealedBomb) {
+        ms->aiTimer += dt;
+        f32 aiStepTime = 0.1f;
+        while (ms->aiTimer >= aiStepTime) {
+            ms->aiTimer -= aiStepTime;
+            doAIAction();
+        }
     }
 
     if (msInput.right.down) {

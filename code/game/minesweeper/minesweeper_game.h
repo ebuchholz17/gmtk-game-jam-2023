@@ -25,7 +25,33 @@ typedef struct scratch_mem_save{
 #define GRID_HEIGHT 18
 #define CELL_DIM 16
 
-typedef struct mine_cell {
+typedef struct cell_coord {
+    i32 row;
+    i32 col;
+} cell_coord;
+
+#define LIST_TYPE cell_coord
+#include "../list.h"
+
+typedef struct cell_group {
+    cell_coord_list coords;
+    i32 numBombs;
+    i32 index;
+} cell_group;
+
+#define LIST_TYPE cell_group
+#include "../list.h"
+
+#define LIST_TYPE i32
+#include "../list.h"
+
+typedef struct mine_cell mine_cell;
+
+typedef mine_cell *mine_cell_ptr;
+#define LIST_TYPE mine_cell_ptr
+#include "../list.h"
+
+struct mine_cell {
     int row;
     int col;
     int open;
@@ -37,11 +63,26 @@ typedef struct mine_cell {
     b32 seen;
 
     b32 solved;
-} mine_cell;
+    i32_list cellGroupIndices;
 
-typedef mine_cell *mine_cell_ptr;
-#define LIST_TYPE mine_cell_ptr
-#include "../list.h"
+    // per-frame stuff for solver
+    int numFlaggedCells;
+    int numUnflaggedCells;
+    int numRemainingBombs;
+    mine_cell_ptr_list adjCells;
+};
+
+typedef enum {
+    AI_STATE_THINKING,
+    AI_STATE_MOVING,
+    AI_STATE_CLICK_DELAY,
+    AI_STATE_CLICK
+} ai_state;
+
+typedef enum {
+    AI_ACTION_REVEAL_CELL,
+    AI_ACTION_FLAG_CELL
+} ai_action;
 
 typedef struct mine_state {
     b32 initialized;
@@ -57,6 +98,16 @@ typedef struct mine_state {
     f32 pointerY;
 
     f32 aiTimer;
+    ai_state aiState;
+    f32 moveDuration;
+    vec2 moveStartPos;
+    vec2 moveEndPos;
+    
+    ai_action aiAction;
+    i32 targetCellRow;
+    i32 targetCellCol;
+
+    b32 revealedBomb;
 } mine_state;
 
 #endif
