@@ -117,7 +117,7 @@ function webglOnRenderStart (): void {
     gl.viewport(0, 0, wglr.windowWidth, wglr.windowHeight);
     //gl.enable(gl.DEPTH_TEST);
     //gl.enable(gl.CULL_FACE);
-    gl.clearColor(0.0, 0.53, 0.17, 0.0);
+    gl.clearColor(0.0, 0.47, 0.49, 0.0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     gl.enable(gl.BLEND);

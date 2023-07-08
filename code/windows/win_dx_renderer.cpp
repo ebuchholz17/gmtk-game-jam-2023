@@ -823,7 +823,7 @@ void renderGame (dx_renderer *dxr, mem_arena *renderMemory) {
         cmdList->ResourceBarrier(1, &barrier);
     }
 
-    f32 clearColor[] = { 0.0f, 0.53f, 0.17f, 1.0f };
+    f32 clearColor[] = { 0.0f, 0.47f, 0.49f, 1.0f };
     D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = dxr->rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
     rtvHandle.ptr += dxr->currBackBufferIndex * dxr->rtvDescriptorSize;
     cmdList->ClearRenderTargetView(rtvHandle, clearColor, 0, 0);

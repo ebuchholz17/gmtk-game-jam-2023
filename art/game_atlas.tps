@@ -173,6 +173,32 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">game_atlas/1.png</key>
+            <key type="filename">game_atlas/2.png</key>
+            <key type="filename">game_atlas/3.png</key>
+            <key type="filename">game_atlas/4.png</key>
+            <key type="filename">game_atlas/5.png</key>
+            <key type="filename">game_atlas/6.png</key>
+            <key type="filename">game_atlas/7.png</key>
+            <key type="filename">game_atlas/8.png</key>
+            <key type="filename">game_atlas/bomb.png</key>
+            <key type="filename">game_atlas/closed_cell.png</key>
+            <key type="filename">game_atlas/flag.png</key>
+            <key type="filename">game_atlas/open_cell.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,8,8</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,8,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">game_atlas/dpad_down_down.png</key>
             <key type="filename">game_atlas/dpad_down_up.png</key>
             <key type="filename">game_atlas/dpad_up_down.png</key>
@@ -225,7 +251,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">game_atlas/grassy_checkers.png</key>
+            <key type="filename">game_atlas/pointer.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -234,9 +260,25 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>27,27,54,54</rect>
+                <rect>4,6,7,11</rect>
                 <key>scale9Paddings</key>
-                <rect>27,27,54,54</rect>
+                <rect>4,6,7,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">game_atlas/smiley.png</key>
+            <key type="filename">game_atlas/smiley_frame.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,10,19,19</rect>
+                <key>scale9Paddings</key>
+                <rect>10,10,19,19</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
