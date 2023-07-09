@@ -261,6 +261,13 @@ UPDATE_GNG_GAME(updateGNGGame) {
             .loaded = false,
             .key = "impact"
         });
+        asset_to_load_listPush(assetList, (asset_to_load){
+            .name = "click",
+            .path = "assets/click.wav",
+            .type = ASSET_TO_LOAD_TYPE_WAV,
+            .loaded = false,
+            .key = "click"
+        });
 
 
         for (u32 assetIndex = 0; assetIndex < assetList->numValues; ++assetIndex) {

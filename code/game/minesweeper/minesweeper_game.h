@@ -74,9 +74,12 @@ struct mine_cell {
 
 typedef enum {
     AI_STATE_THINKING,
+    AI_STATE_THOUGHT_BUBBLE,
     AI_STATE_MOVING,
     AI_STATE_CLICK_DELAY,
-    AI_STATE_CLICK
+    AI_STATE_CLICK,
+    AI_STATE_JUST_CLICKED,
+    AI_STATE_THINK_DELAY
 } ai_state;
 
 typedef enum {
@@ -108,6 +111,14 @@ typedef struct mine_state {
     i32 targetCellCol;
 
     b32 revealedBomb;
+
+    b32 bumpingLeft;
+    b32 bumpingRight;
+    b32 bumpingUp;
+    b32 bumpingDown;
+
+    f32 bumpAmtX;
+    f32 bumpAmtY;
 } mine_state;
 
 #endif

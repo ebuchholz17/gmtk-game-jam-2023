@@ -199,6 +199,24 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">game_atlas/bubble_click.png</key>
+            <key type="filename">game_atlas/bubble_dots.png</key>
+            <key type="filename">game_atlas/bubble_flag.png</key>
+            <key type="filename">game_atlas/click.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,7,14,13</rect>
+                <key>scale9Paddings</key>
+                <rect>7,7,14,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">game_atlas/dpad_down_down.png</key>
             <key type="filename">game_atlas/dpad_down_up.png</key>
             <key type="filename">game_atlas/dpad_up_down.png</key>
@@ -267,7 +285,9 @@
                 <false/>
             </struct>
             <key type="filename">game_atlas/smiley.png</key>
+            <key type="filename">game_atlas/smiley_dead.png</key>
             <key type="filename">game_atlas/smiley_frame.png</key>
+            <key type="filename">game_atlas/smiley_sunglasses.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
