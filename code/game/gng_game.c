@@ -404,8 +404,12 @@ UPDATE_GNG_GAME(updateGNGGame) {
             }
             remainingTime -= updateDelta;
             
+            // NOTE: push sprite transform so we can get local pointer pos
+            spriteManPushTransform((sprite_transform){ .pos = gameOrigin, .scale = gameScale });
             // update
             updateMinesweeper(input, &state->vInput, timeStep, &state->memory, &scratchMemory, platAPI);
+
+            spriteManPopMatrix();
 
             resetInput(input, &state->vInput);
         }

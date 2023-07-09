@@ -87,6 +87,13 @@ typedef enum {
     AI_ACTION_FLAG_CELL
 } ai_action;
 
+typedef enum {
+    MS_GAME_STATE_TITLE,
+    MS_GAME_STATE_GAMEPLAY,
+    MS_GAME_STATE_WIN,
+    MS_GAME_STATE_LOSE
+} ms_game_state;
+
 typedef struct mine_state {
     b32 initialized;
     b32 gameStarted;
@@ -119,6 +126,16 @@ typedef struct mine_state {
 
     f32 bumpAmtX;
     f32 bumpAmtY;
+
+    i32 gridWidth;
+    i32 gridHeight;
+    i32 totalNumBombs;
+    ms_game_state state;
+
+    f32 gridStartX;
+    f32 gridStartY;
+
+    f32 gameTimer;
 } mine_state;
 
 #endif

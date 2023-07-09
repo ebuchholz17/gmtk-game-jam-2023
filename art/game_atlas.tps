@@ -185,6 +185,7 @@
             <key type="filename">game_atlas/closed_cell.png</key>
             <key type="filename">game_atlas/flag.png</key>
             <key type="filename">game_atlas/open_cell.png</key>
+            <key type="filename">game_atlas/x.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -214,6 +215,21 @@
                 <rect>7,7,14,13</rect>
                 <key>scale9Paddings</key>
                 <rect>7,7,14,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">game_atlas/button.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>22,7,45,13</rect>
+                <key>scale9Paddings</key>
+                <rect>22,7,45,13</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -266,6 +282,45 @@
                 <rect>12,12,25,25</rect>
                 <key>scale9Paddings</key>
                 <rect>12,12,25,25</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">game_atlas/led_0.png</key>
+            <key type="filename">game_atlas/led_1.png</key>
+            <key type="filename">game_atlas/led_2.png</key>
+            <key type="filename">game_atlas/led_3.png</key>
+            <key type="filename">game_atlas/led_4.png</key>
+            <key type="filename">game_atlas/led_5.png</key>
+            <key type="filename">game_atlas/led_6.png</key>
+            <key type="filename">game_atlas/led_7.png</key>
+            <key type="filename">game_atlas/led_8.png</key>
+            <key type="filename">game_atlas/led_9.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,8,9,15</rect>
+                <key>scale9Paddings</key>
+                <rect>4,8,9,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">game_atlas/number_backing.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,10,31,19</rect>
+                <key>scale9Paddings</key>
+                <rect>16,10,31,19</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

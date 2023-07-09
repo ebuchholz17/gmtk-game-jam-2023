@@ -1,5 +1,5 @@
 atlas.png
-size: 62, 819
+size: 249, 244
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -26,197 +26,288 @@ repeat: none
   index: -1
 4
   rotate: false
-  xy: 2, 20
+  xy: 56, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 5
   rotate: false
-  xy: 20, 20
+  xy: 74, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 6
   rotate: false
-  xy: 38, 20
+  xy: 92, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 7
   rotate: false
-  xy: 2, 38
+  xy: 110, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 8
   rotate: false
-  xy: 20, 38
+  xy: 128, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 bomb
   rotate: false
-  xy: 38, 38
+  xy: 146, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 bubble_click
   rotate: false
-  xy: 2, 56
+  xy: 140, 20
   size: 28, 27
   orig: 28, 27
   offset: 0, 0
   index: -1
 bubble_dots
   rotate: false
-  xy: 32, 56
+  xy: 170, 20
   size: 28, 27
   orig: 28, 27
   offset: 0, 0
   index: -1
 bubble_flag
   rotate: false
-  xy: 2, 85
+  xy: 200, 20
   size: 28, 27
   orig: 28, 27
   offset: 0, 0
   index: -1
+button
+  rotate: false
+  xy: 19, 20
+  size: 89, 26
+  orig: 89, 26
+  offset: 0, 0
+  index: -1
 click
   rotate: false
-  xy: 32, 85
+  xy: 110, 20
   size: 28, 26
   orig: 28, 26
   offset: 0, 0
   index: -1
 closed_cell
   rotate: false
-  xy: 2, 114
+  xy: 164, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 dpad_down_down
   rotate: false
-  xy: 2, 132
+  xy: 53, 188
   size: 42, 54
   orig: 42, 54
   offset: 0, 0
   index: -1
 dpad_down_up
   rotate: false
-  xy: 2, 188
+  xy: 97, 188
   size: 42, 54
   orig: 42, 54
   offset: 0, 0
   index: -1
 dpad_left_down
   rotate: false
-  xy: 2, 244
+  xy: 162, 93
   size: 54, 42
   orig: 54, 42
   offset: 0, 0
   index: -1
 dpad_left_up
   rotate: false
-  xy: 2, 288
+  xy: 2, 137
   size: 54, 42
   orig: 54, 42
   offset: 0, 0
   index: -1
 dpad_right_down
   rotate: false
-  xy: 2, 332
+  xy: 58, 137
   size: 54, 42
   orig: 54, 42
   offset: 0, 0
   index: -1
 dpad_right_up
   rotate: false
-  xy: 2, 376
+  xy: 114, 137
   size: 54, 42
   orig: 54, 42
   offset: 0, 0
   index: -1
 dpad_up_down
   rotate: false
-  xy: 2, 420
+  xy: 141, 188
   size: 42, 54
   orig: 42, 54
   offset: 0, 0
   index: -1
 dpad_up_up
   rotate: false
-  xy: 2, 476
+  xy: 185, 188
   size: 42, 54
   orig: 42, 54
   offset: 0, 0
   index: -1
 face_button_down
   rotate: false
-  xy: 2, 532
+  xy: 170, 137
   size: 49, 49
   orig: 49, 49
   offset: 0, 0
   index: -1
 face_button_up
   rotate: false
-  xy: 2, 583
+  xy: 2, 188
   size: 49, 49
   orig: 49, 49
   offset: 0, 0
   index: -1
 flag
   rotate: false
-  xy: 2, 634
+  xy: 182, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
+led_0
+  rotate: false
+  xy: 230, 20
+  size: 17, 31
+  orig: 17, 31
+  offset: 0, 0
+  index: -1
+led_1
+  rotate: false
+  xy: 2, 53
+  size: 17, 31
+  orig: 17, 31
+  offset: 0, 0
+  index: -1
+led_2
+  rotate: false
+  xy: 21, 53
+  size: 17, 31
+  orig: 17, 31
+  offset: 0, 0
+  index: -1
+led_3
+  rotate: false
+  xy: 40, 53
+  size: 17, 31
+  orig: 17, 31
+  offset: 0, 0
+  index: -1
+led_4
+  rotate: false
+  xy: 59, 53
+  size: 17, 31
+  orig: 17, 31
+  offset: 0, 0
+  index: -1
+led_5
+  rotate: false
+  xy: 78, 53
+  size: 17, 31
+  orig: 17, 31
+  offset: 0, 0
+  index: -1
+led_6
+  rotate: false
+  xy: 97, 53
+  size: 17, 31
+  orig: 17, 31
+  offset: 0, 0
+  index: -1
+led_7
+  rotate: false
+  xy: 116, 53
+  size: 17, 31
+  orig: 17, 31
+  offset: 0, 0
+  index: -1
+led_8
+  rotate: false
+  xy: 135, 53
+  size: 17, 31
+  orig: 17, 31
+  offset: 0, 0
+  index: -1
+led_9
+  rotate: false
+  xy: 154, 53
+  size: 17, 31
+  orig: 17, 31
+  offset: 0, 0
+  index: -1
+number_backing
+  rotate: false
+  xy: 173, 53
+  size: 62, 38
+  orig: 62, 38
+  offset: 0, 0
+  index: -1
 open_cell
   rotate: false
-  xy: 20, 634
+  xy: 200, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 pointer
   rotate: false
-  xy: 38, 634
+  xy: 2, 20
   size: 15, 23
   orig: 15, 23
   offset: 0, 0
   index: -1
 smiley
   rotate: false
-  xy: 2, 659
+  xy: 2, 93
   size: 38, 38
   orig: 38, 38
   offset: 0, 0
   index: -1
 smiley_dead
   rotate: false
-  xy: 2, 699
+  xy: 42, 93
   size: 38, 38
   orig: 38, 38
   offset: 0, 0
   index: -1
 smiley_frame
   rotate: false
-  xy: 2, 739
+  xy: 82, 93
   size: 38, 38
   orig: 38, 38
   offset: 0, 0
   index: -1
 smiley_sunglasses
   rotate: false
-  xy: 2, 779
+  xy: 122, 93
   size: 38, 38
   orig: 38, 38
+  offset: 0, 0
+  index: -1
+x
+  rotate: false
+  xy: 218, 2
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: -1
